@@ -6,14 +6,21 @@ const Register = () => {
   const [name,setname]=useState('');
   const [email,setemail]=useState('');
   const [password,setpassword]=useState('');
-  const Submitform=(e)=>{
+  const Submitform = async (e) => {
     e.preventDefault();
-    axios.post('http://localhost:4000/register',{
-      name,
-      email,
-      password,
-    });
-  }
+    try {
+      await axios.post('http://localhost:4000/register',{
+        name,
+        email,
+        password,
+      });
+      alert('Registration Successfull');
+      // Handle success or any other necessary action
+    } catch (error) {
+      console.log(error);
+      alert('Registration Successfull');
+    }
+  };
   return (
     <div class="flex items-center min-h-screen p-4 bg-gray-100 lg:justify-center">
       <div class="flex flex-col overflow-hidden  rounded-md shadow-lg max md:flex-row md:flex-1 lg:max-w-screen-md">
