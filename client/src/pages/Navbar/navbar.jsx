@@ -1,7 +1,9 @@
-import React from "react";
+import React, {useState,useContext} from "react";
 import { Link } from "react-router-dom";
+import { UserContext} from '../../UserContext';
 
 const Navbar = () => {
+  const {user}=useContext(UserContext);
   return (
     <div>
       <header className="p-4 flex justify-between">
@@ -77,6 +79,11 @@ const Navbar = () => {
               clipRule="evenodd"
             />
           </svg>
+          {!!user && (
+            <div>
+              {user.name}
+            </div>
+          )}
         </Link>
       </header>
     </div>

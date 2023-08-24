@@ -4,8 +4,13 @@ const mongoose = require("mongoose");
 const User = require("./models/User.js");
 const app = express();
 const jwt = require("jsonwebtoken");
+const cookieParser=require("cookie-parser");
 require("dotenv").config();
+
+
+
 app.use(express.json());
+app.use(cookieParser());
 const jwtsecret='salting';
 
 mongoose
@@ -43,6 +48,22 @@ app.get("/test", (req, res) => {
   res.json("Hello");
 });
 
+app.get("/profile", (req, res) => {
+  const {token}=req.cookies;
+  if(token){
+    jwt.verify(token,jwtsecret,{},(err,user)=>{
+      if(err){
+        throw err;
+      }
+      res.json(user);
+    })
+  }
+  else{
+    res.json(null);
+  }
+  res.json({token})
+});
+
 app.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -50,7 +71,7 @@ app.post("/login", async (req, res) => {
 
     if (userDoc) {
       if (password===userDoc.password){
-        jwt.sign({email: userDoc.email,id:userDoc._id},jwtsecret,{},(err,token)=>{
+        jwt.sign({email: userDoc.email,id:userDoc._id,name:userDoc.name},jwtsecret,{},(err,token)=>{
           if(err){
             throw err;
           }
