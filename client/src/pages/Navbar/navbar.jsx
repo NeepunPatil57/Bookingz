@@ -50,7 +50,7 @@ const Navbar = () => {
           </button>
         </div>
         <Link
-          to={"/login"}
+          to={user?"/account":"/login"}
           className="flex  gap-2 border border-gray-300 rounded-full py-4 px-6 font-bold text-md shadow-md shadow-grey-300"
         >
           <svg
