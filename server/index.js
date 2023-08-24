@@ -49,20 +49,23 @@ app.get("/test", (req, res) => {
 });
 
 app.get("/profile", (req, res) => {
-  const {token}=req.cookies;
-  if(token){
-    jwt.verify(token,jwtsecret,{},(err,user)=>{
-      if(err){
+  const { token } = req.cookies;
+  if (token) {
+    jwt.verify(token, jwtsecret, {}, (err, user) => {
+      if (err) {
         throw err;
       }
       res.json(user);
-    })
-  }
-  else{
+    });
+  } else {
     res.json(null);
   }
-  res.json({token})
 });
+
+app.post("/logout",(req,res)=>{
+  res.cookie('token','').json(true);
+});
+
 
 app.post("/login", async (req, res) => {
   try {

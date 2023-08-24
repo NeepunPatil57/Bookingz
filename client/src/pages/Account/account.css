@@ -1,0 +1,64 @@
+.user_welcome{
+    font-size: 1.8rem;
+    font-weight: 500;
+}
+
+.profile{
+    height: 450px;
+    width: 800px;
+    background-color: grey;
+    margin-top: 40px;
+}
+
+.profile-photo{
+    height: 200px;
+    width: 200px;
+    background-color:brown;
+    margin-top: 40px;
+    margin-left: 50px;
+}
+
+.profile-info{
+    margin-left: 300px;
+    font-size: 1.5rem;
+    font-weight: 500;
+    position: relative;
+    top: -12rem;
+    bottom: 0.5rem;
+}
+
+.profile_heading{
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-left: 20px;
+    margin-top: 300px;
+}
+
+.logout{
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-left: 20px;
+}
+
+.button {
+    position: relative;
+    border: none;
+    padding: 15px 25px; /* Adjust padding for more height and width */
+    cursor: pointer;
+    font-size: 1.3rem; /* Increase font size */
+    border-radius: 6px; /* Slightly round the corners */
+    margin-left: 34rem;
+    top:-2.3rem;
+  }
+  
+  /* Style the logout button */
+  .logout-button {
+    background-color: black;
+    color: white;
+  }
+  
+  /* Add some hover effect */
+  .logout-button:hover {
+    background-color: #E64A19;
+  }
+
