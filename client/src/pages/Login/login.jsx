@@ -1,23 +1,33 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, {useContext} from "react";
+import { useState } from "react";
+import { Link,Navigate } from "react-router-dom";
+import { UserContext} from '../../UserContext';
 import axios from "axios";
 
 const Login = () => {
+  const { setUser } = useContext(UserContext); 
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
+  const [redirect, setredirect] = useState(false);
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    e.preventDefault();
     try {
-      await axios.post("http://localhost:4000/login", {
+      const response=await axios.post("http://localhost:4000/login",{
         email,
         password,
       });
+      setUser(response.data);
       alert("Login successful");
+      setredirect(true);
     } catch (e) {
       alert("Login failed");
+      console.log(e);
     }
   };
+  
+  if(redirect){
+    return <Navigate to={'/'}/>
+  }
   return (
     <div>
       <div class="flex items-center min-h-screen p-4  lg:justify-center ">

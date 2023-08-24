@@ -1,11 +1,12 @@
 import React,{useState} from 'react'
-import { Link } from "react-router-dom";
+import { Link ,Navigate} from "react-router-dom";
 import axios from "axios";
 
 const Register = () => {
   const [name,setname]=useState('');
   const [email,setemail]=useState('');
   const [password,setpassword]=useState('');
+  const [redirect, setredirect] = useState(false);
   const Submitform = async (e) => {
     e.preventDefault();
     try {
@@ -15,12 +16,16 @@ const Register = () => {
         password,
       });
       alert('Registration Successfull');
+      setredirect(true);
       // Handle success or any other necessary action
     } catch (error) {
       console.log(error);
       alert('Registration Successfull');
     }
   };
+  if(redirect){
+    return <Navigate to={'/login'}/>
+  }
   return (
     <div class="flex items-center min-h-screen p-4 bg-gray-100 lg:justify-center">
       <div class="flex flex-col overflow-hidden  rounded-md shadow-lg max md:flex-row md:flex-1 lg:max-w-screen-md">

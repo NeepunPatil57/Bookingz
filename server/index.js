@@ -3,8 +3,10 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const User = require("./models/User.js");
 const app = express();
+const jwt = require("jsonwebtoken");
 require("dotenv").config();
 app.use(express.json());
+const jwtsecret='salting';
 
 mongoose
   .connect(process.env.DB_KEY, {
@@ -47,8 +49,13 @@ app.post("/login", async (req, res) => {
     const userDoc = await User.findOne({ email });
 
     if (userDoc) {
-      if (password === userDoc.password) {
-        res.json("Password match");
+      if (password===userDoc.password){
+        jwt.sign({email: userDoc.email,id:userDoc._id},jwtsecret,{},(err,token)=>{
+          if(err){
+            throw err;
+          }
+          res.cookie('token',token).json(userDoc);
+        });
       } else {
         res.status(422).json("Invalid password");
       }
