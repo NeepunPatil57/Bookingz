@@ -4,23 +4,24 @@ import { Link, useLocation } from "react-router-dom";
 import AccountNav from "../Account/accoutnav";
 import { UserContext } from "../../UserContext";
 import { useContext } from "react";
-import Perks from '../../perks';
+import Perks from "../../perks";
+import axios from "axios";
 
 const Placesnew = () => {
   const { user } = useContext(UserContext);
   const [selected, setSelected] = useState([]);
-  const [title,setTitle] = useState('');
-  const [address,setAddress] = useState('');
-//   const [photoLink,setPhotoLink] = useState('');
-  const [addedPhotos,setAddedPhotos] = useState([]);
-  const [description,setDescription] = useState('');
-  const [perks,setPerks] = useState([]);
-  const [extraInfo,setExtraInfo] = useState('');
-  const [checkIn,setCheckIn] = useState('');
-  const [checkOut,setCheckOut] = useState('');
-  const [maxGuests,setMaxGuests] = useState(1);
-  const [price,setPrice] = useState(100);
-  const [redirect,setRedirect] = useState(false);
+  const [title, setTitle] = useState("");
+  const [address, setAddress] = useState("");
+  const [photoLink, setPhotoLink] = useState("");
+  const [addedPhotos, setAddedPhotos] = useState([]);
+  const [description, setDescription] = useState("");
+  const [perks, setPerks] = useState([]);
+  const [extraInfo, setExtraInfo] = useState("");
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
+  const [maxGuests, setMaxGuests] = useState(1);
+  const [price, setPrice] = useState(100);
+  const [redirect, setRedirect] = useState(false);
   const onChange = (newSelected) => {
     setSelected(newSelected);
   };
@@ -30,6 +31,40 @@ const Placesnew = () => {
       onChange([...selected, name]);
     } else {
       onChange([...selected.filter((selectedName) => selectedName !== name)]);
+    }
+  }
+
+  const uploadfromdevice = (e) => {
+    const files = e.target.files;
+    const data = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      data.append("photos", files[i]);
+    }
+    axios
+      .post("http://localhost:4000/upload-from-device", data, {
+        headers: { "Content-type": "multipart/form-data" },
+      })
+      .then((response) => {
+        const { data: filenames } = response;
+        setAddedPhotos((prev) => {
+          return [...prev, ...filenames];
+        });
+      });
+  };
+
+  async function addPhotoByLink(ev) {
+    ev.preventDefault();
+    try {
+      const { data: filename } = await axios.post(
+        "http://localhost:4000/upload-by-link",
+        { link: photoLink }
+      );
+      setAddedPhotos((prev) => {
+        return [...prev, filename];
+      });
+      setPhotoLink("");
+    } catch (error) {
+      console.error("Error adding photo by link:", error);
     }
   }
   return (
@@ -47,7 +82,7 @@ const Placesnew = () => {
               type="text"
               placeholder="Title,for example my Apartment"
               value={title}
-              onChange={ev => setTitle(ev.target.value)}
+              onChange={(ev) => setTitle(ev.target.value)}
             />
             <h2 className="font-semibold text-2xl">Address</h2>
             <p className="text-grey-500">Address for Your Appartment</p>
@@ -56,7 +91,7 @@ const Placesnew = () => {
               type="text"
               placeholder="Title,for example my Apartment"
               value={address}
-              onChange={ev => setAddress(ev.target.value)}
+              onChange={(ev) => setAddress(ev.target.value)}
             />
             <h2 className="font-semibold text-2xl">Photos</h2>
             <p className="text-grey-500">More are Better</p>
@@ -64,12 +99,15 @@ const Placesnew = () => {
               <input
                 type="text"
                 placeholder="Add Using Link...."
-                value={addedPhotos}
-              onChange={ev => setAddedPhotos(ev.target.value)}
+                value={photoLink}
+                onChange={(ev) => setPhotoLink(ev.target.value)}
                 className="w-full font-semibold text-lg px-2 py-2 rounded-lg  focus:border-black"
               ></input>
 
-              <button className="bg-cyan-300 rounded-2xl py-6 px-4 font-semibold text-black flex items-center gap-2 text-md">
+              <button
+                onClick={addPhotoByLink}
+                className="bg-cyan-300 rounded-2xl py-6 px-4 font-semibold text-black flex items-center gap-2 text-md"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -93,7 +131,23 @@ const Placesnew = () => {
               </button>
             </div>
             <div className="mt-2 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-              <button className="bg-cyan-300 border font-semibold rounded-2xl p-8 text-md text-black flex items-center">
+              {addedPhotos.length > 0 &&
+                addedPhotos.map((link, index) => (
+                  <div className="py-2 px-2 h-40 flex " key={index}>
+                    <img
+                      className="rounded-2xl w-full object-cover"
+                      src={"http://localhost:4000/uploads/" + link}
+                      alt="No Image"
+                    ></img>
+                  </div>
+                ))}
+              <label className="bg-cyan-300 h-40 cursor-pointer border font-semibold rounded-2xl p-8 text-md text-black flex items-center">
+                <input
+                  type="file"
+                  multiple
+                  className="hidden"
+                  onChange={uploadfromdevice}
+                />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -108,35 +162,35 @@ const Placesnew = () => {
                     d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
                   />
                 </svg>
-                Upload From Your Device
-              </button>
+                Upload From Your Device (.jpeg , .png)
+              </label>
             </div>
             <h2 className="font-semibold text-2xl">Description</h2>
             <p className="text-grey-500">Description </p>
-            <textarea 
+            <textarea
               value={description}
-              onChange={ev => setDescription(ev.target.value)}
+              onChange={(ev) => setDescription(ev.target.value)}
             />
             <h2 className="font-semibold text-2xl">Perks</h2>
             <p className="text-grey-500">Select All Perks of Your Place</p>
             <div className="grid md:grid-cols-3 sm:grid-cols-2 lg:sm:grid-cols-6  gap-4">
-              <Perks selected={perks} onChange={setPerks}/>
+              <Perks selected={perks} onChange={setPerks} />
             </div>
             <h2 className="font-semibold text-2xl">Extra Information</h2>
             <p className="text-grey-500">Apartment Rules</p> extraInfo
             <textarea
               value={extraInfo}
-              onChange={ev => setExtraInfo(ev.target.value)}
-             />
+              onChange={(ev) => setExtraInfo(ev.target.value)}
+            />
             <div className="grid sm:grid-cols-3 gap-2">
               <div>
                 <h2 className="font-semibold text-2xl">Check In Time</h2>
                 <p className="text-grey-500">Add Check In Time of Your Place</p>
-                <input 
-                    type="text" 
-                    placeholder="14:00"
-                    value={checkIn}
-                    onChange={ev => setCheckIn(ev.target.value)} 
+                <input
+                  type="text"
+                  placeholder="14:00"
+                  value={checkIn}
+                  onChange={(ev) => setCheckIn(ev.target.value)}
                 />
               </div>
               <div>
@@ -144,24 +198,24 @@ const Placesnew = () => {
                 <p className="text-grey-500">
                   Add Check Out Time of Your Place
                 </p>
-                <input 
-                    type="text"
-                    placeholder="11:00"
-                    value={checkOut}
-                    onChange={ev => setCheckOut(ev.target.value)}  
-                    />
+                <input
+                  type="text"
+                  placeholder="11:00"
+                  value={checkOut}
+                  onChange={(ev) => setCheckOut(ev.target.value)}
+                />
               </div>
               <div>
                 <h2 className="font-semibold text-2xl">Max Number of Guests</h2>
                 <p className="text-grey-500">
                   Add Max no of Guests in Your Place
                 </p>
-                <input 
-                    type="number"
-                    placeholder="4"
-                    value={maxGuests}
-                    onChange={ev => setMaxGuests(ev.target.value)} 
-                 />
+                <input
+                  type="number"
+                  placeholder="4"
+                  value={maxGuests}
+                  onChange={(ev) => setMaxGuests(ev.target.value)}
+                />
               </div>
             </div>
             <div>
