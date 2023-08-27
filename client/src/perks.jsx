@@ -1,9 +1,14 @@
 import React from "react";
 
 const Perks = ({selected,onChange}) => {
-    const handleCbClick=()=>{
-        console.log('lol');
+  function handleCbClick(ev) {
+    const {checked,name} = ev.target;
+    if (checked) {
+      onChange([...selected,name]);
+    } else {
+      onChange([...selected.filter(selectedName => selectedName !== name)]);
     }
+  }
   return (
     <div>
       <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer">
