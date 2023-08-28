@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useEffect,useState } from "react";
 import Navbar from "../Navbar/navbar";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation,useParams } from "react-router-dom";
 import AccountNav from '../Account/accoutnav';
-
+import axios from 'axios';
 const Places = () => {
+  const[places,setPlaces]=useState([]);
+  const {id}=useParams();
+  console.log("id: main page",{id});
+  useEffect(()=>{
+    axios.get('http://localhost:4000/places').then(({data})=>{
+      setPlaces(data)
+  
+    });
+  },[])
   return (
     <div className="">
       <Navbar />
@@ -17,6 +26,21 @@ const Places = () => {
             Add new place
           </Link>
         </div> 
+        <div className="mt-4">
+          {places.length > 0 && places.map(place=>(
+            <Link to={"/account/places/"+place._id} className="bg-gray-200 p-4 rounded-2xl flex gap-4 shink-0 cursor-pointer">
+              <div className="w-32 h-32 bg-gray-500 ">
+                {place.photos.length && (
+                  <img src={place.photos[0]} alt="No Image"/>
+                )}
+              </div>
+              <div className="grow-0 shink">
+              <h2 className="font-semibold text-2xl">{place.title}</h2>
+                <h2 className="font-semibold text-xl mt-2">{place.description}</h2>
+              </div>
+            </Link>
+          ))}
+        </div>
    </div>
   );
 };

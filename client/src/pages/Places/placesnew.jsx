@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Navbar from "../Navbar/navbar";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation,Navigate,useParams } from "react-router-dom";
 import AccountNav from "../Account/accoutnav";
 import { UserContext } from "../../UserContext";
 import { useContext } from "react";
@@ -8,6 +8,8 @@ import Perks from "../../perks";
 import axios from "axios";
 
 const Placesnew = () => {
+  const {id}=useParams();
+  console.log("id: places form page",{id});
   const { user } = useContext(UserContext);
   const [selected, setSelected] = useState([]);
   const [title, setTitle] = useState("");
@@ -22,6 +24,12 @@ const Placesnew = () => {
   const [maxGuests, setMaxGuests] = useState(1);
   const [price, setPrice] = useState(100);
   const [redirect, setRedirect] = useState(false);
+  useEffect(()=>{
+    if(!id){
+      return;
+    }
+    axios.get('http://localhost:4000/places/'+id);
+  },[id]);
   const onChange = (newSelected) => {
     setSelected(newSelected);
   };
@@ -67,6 +75,27 @@ const Placesnew = () => {
       console.error("Error adding photo by link:", error);
     }
   }
+
+  const addPlaces = async (e) => {
+    e.preventDefault();
+    await axios.post("http://localhost:4000/places", {
+      title,
+      address,
+      addedPhotos,
+      description,
+      perks,
+      extraInfo,
+      checkIn,
+      checkOut,
+      maxGuests,
+    });
+    setRedirect('/account/places')
+  };
+
+  if (redirect) {
+    return <Navigate to={'/account/places'} />
+  }
+
   return (
     <div className="px-4">
       <Navbar />
@@ -74,7 +103,7 @@ const Placesnew = () => {
       <span className="font-semibold text-3xl mb-4 ">Details</span>
       <div className="py-5">
         <div className="p-4 rounded-lg shadow-md  ring-2 ring-gray-300">
-          <form className="w-md">
+          <form className="w-md" onSubmit={addPlaces}>
             <h2 className="font-semibold text-2xl">Title</h2>
             <p className="text-grey-500">Title for Your Appartment</p>
             <input

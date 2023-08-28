@@ -19,6 +19,7 @@ const App=()=>{
         <Route path="/account" element={<Account />} />
         <Route path="/account/places" element={<Places />} />
         <Route path="/account/places/new" element={<Placesnew/>}/>
+        <Route path="/account/places/:id" element={<Placesnew/>}/>
         </Routes>
       </Router>
     </UserContextProvider>

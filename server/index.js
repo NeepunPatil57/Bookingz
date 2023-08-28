@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const User = require("./models/User.js");
+const Place = require("./models/Place.js");
 const app = express();
 const jwt = require("jsonwebtoken");
 const cookieParser=require("cookie-parser");
@@ -9,8 +10,6 @@ const Imagedownloader = require('image-downloader');
 const fs = require('fs');
 const multer  = require('multer')
 require("dotenv").config();
-
-
 
 app.use(express.json());
 app.use(cookieParser());
@@ -69,6 +68,66 @@ app.get("/profile", (req, res) => {
 app.post("/logout",(req,res)=>{
   res.cookie('token','').json(true);
 });
+
+app.get("/places", async (req, res) => {
+  const { token } = req.cookies;
+  jwt.verify(token, jwtsecret, {}, async (err, user) => {
+    if (err) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+    
+    const { id } = user;
+    try {
+      const places = await Place.find({ owner: id });
+      res.json(places);
+    } catch (error) {
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  });
+});
+
+app.get("/places/:id",(req, res) => {
+  res.json(req.params);
+});
+
+
+app.post("/places", async (req, res) => {
+  const { token } = req.cookies;
+  const {
+    title, address, addedPhotos, description,
+    perks, extraInfo, checkIn, checkOut, maxGuests
+  } = req.body;
+  
+  console.log("data", { checkIn, maxGuests }); // Make sure values are printed correctly
+
+  jwt.verify(token, jwtsecret, {}, async (err, user) => {
+    if (err) {
+      throw err;
+    }
+    try {
+      const placeDoc = await Place.create({
+        owner: user.id,
+        title,
+        address,
+        photos:addedPhotos,
+        description,
+        perks,
+        extraInfo,
+        checkIn,
+        checkOut,
+        maxGuests,
+      });
+
+      // Send a single response with the created place document and a status code
+      res.status(201).json({ message: "Place created successfully", place: placeDoc });
+    } catch (error) {
+      // Handle any errors that occurred during the creation process
+      console.error(error); // Print the error for debugging
+      res.status(500).json({ error: "An error occurred while creating the place" });
+    }
+  });
+});
+
 
 
 
