@@ -28,8 +28,20 @@ const Placesnew = () => {
     if(!id){
       return;
     }
-    axios.get('http://localhost:4000/places/'+id);
+    axios.get('http://localhost:4000/places/'+id).then(response=>{
+      const {data}=response;
+      setTitle(data.title);
+      setAddress(data.address);
+      setAddedPhotos(data.photos);
+      setDescription(data.description);
+      setPerks(data.perks);
+      setExtraInfo(data.extraInfo);
+      setCheckIn(data.checkIn);
+      setCheckOut(data.checkOut);
+      setMaxGuests(data.maxGuests);
+    });
   },[id]);
+
   const onChange = (newSelected) => {
     setSelected(newSelected);
   };
@@ -78,17 +90,37 @@ const Placesnew = () => {
 
   const addPlaces = async (e) => {
     e.preventDefault();
-    await axios.post("http://localhost:4000/places", {
-      title,
-      address,
-      addedPhotos,
-      description,
-      perks,
-      extraInfo,
-      checkIn,
-      checkOut,
-      maxGuests,
-    });
+    const placeData={
+        title,
+        address,
+        addedPhotos,
+        description,
+        perks,
+        extraInfo,
+        checkIn,
+        checkOut,
+        maxGuests,
+    }
+    if(id){
+      //update
+      await axios.put("http://localhost:4000/places", {
+        id,
+        ...placeData
+      });
+    }
+    else{
+      await axios.post("http://localhost:4000/places", {
+        title,
+        address,
+        addedPhotos,
+        description,
+        perks,
+        extraInfo,
+        checkIn,
+        checkOut,
+        maxGuests,
+      });
+    }
     setRedirect('/account/places')
   };
 
