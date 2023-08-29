@@ -28,10 +28,10 @@ const Places = () => {
         </div> 
         <div className="mt-4">
           {places.length > 0 && places.map(place=>(
-            <Link to={"/account/places/"+place._id} className="bg-gray-200 p-4 rounded-2xl flex gap-4 shink-0 cursor-pointer">
-              <div className="w-32 h-32 bg-gray-500 ">
+            <Link to={"/account/places/"+place._id} className="bg-gray-200 mb-4 p-4 rounded-2xl flex gap-4 shink-0 cursor-pointer">
+              <div className="flex w-32 h-32 bg-gray-500 ">
                 {place.photos.length && (
-                  <img src={place.photos[0]} alt="No Image"/>
+                  <img className="object-cover" src={'http://localhost:4000/uploads/'+place.photos[0]} alt="No Image"/>
                 )}
               </div>
               <div className="grow-0 shink">
