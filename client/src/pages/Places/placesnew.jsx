@@ -39,6 +39,7 @@ const Placesnew = () => {
       setCheckIn(data.checkIn);
       setCheckOut(data.checkOut);
       setMaxGuests(data.maxGuests);
+      setPrice(data.price);
     });
   }, [id]);
 
@@ -100,6 +101,7 @@ const Placesnew = () => {
       checkIn,
       checkOut,
       maxGuests,
+      price,
     };
     if (id) {
       //update
@@ -118,6 +120,7 @@ const Placesnew = () => {
         checkIn,
         checkOut,
         maxGuests,
+        price,
       });
     }
     setRedirect("/account/places");
@@ -309,7 +312,7 @@ const Placesnew = () => {
               value={extraInfo}
               onChange={(ev) => setExtraInfo(ev.target.value)}
             />
-            <div className="grid sm:grid-cols-3 gap-2">
+            <div className="grid gap-2 grid-cols-2 md:grid-cols-4">
               <div>
                 <h2 className="font-semibold text-2xl">Check In Time</h2>
                 <p className="text-grey-500">Add Check In Time of Your Place</p>
@@ -342,6 +345,17 @@ const Placesnew = () => {
                   placeholder="4"
                   value={maxGuests}
                   onChange={(ev) => setMaxGuests(ev.target.value)}
+                />
+              </div>
+              <div>
+                <h3 className="mt-2 -mb-1 font-semibold text-2xl">Price Per Night</h3>
+                <p className="text-grey-500">
+                  Price Per Night of Your Place
+                </p>
+                <input
+                  type="number"
+                  value={price}
+                  onChange={(ev) => setPrice(ev.target.value)}
                 />
               </div>
             </div>

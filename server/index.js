@@ -95,7 +95,7 @@ app.put("/places",async(req, res) => {
   const { token } = req.cookies;
   const {
     id,title, address, addedPhotos, description,
-    perks, extraInfo, checkIn, checkOut, maxGuests
+    perks, extraInfo, checkIn, checkOut, maxGuests,price
   } = req.body;
   jwt.verify(token, jwtsecret, {}, async (err, user) => {
     if(err) throw err;
@@ -111,6 +111,7 @@ app.put("/places",async(req, res) => {
         checkIn,
         checkOut,
         maxGuests,
+        price,
       });
       await placeDoc.save();
       res.json("Ok");
@@ -123,7 +124,7 @@ app.post("/places", async (req, res) => {
   const { token } = req.cookies;
   const {
     title, address, addedPhotos, description,
-    perks, extraInfo, checkIn, checkOut, maxGuests
+    perks, extraInfo, checkIn, checkOut, maxGuests,price,
   } = req.body;
   
   console.log("data", { checkIn, maxGuests }); // Make sure values are printed correctly
@@ -144,6 +145,7 @@ app.post("/places", async (req, res) => {
         checkIn,
         checkOut,
         maxGuests,
+        price,
       });
 
       // Send a single response with the created place document and a status code
@@ -222,6 +224,10 @@ app.post('/upload-from-device', photosMiddleware.array('photos', 100), (req, res
   }
   console.log('Upload from Device');
   res.json(uploadedFiles);
+});
+
+app.get('/all-places',async(req,res)=>{
+  res.json(await Place.find())
 });
 
 

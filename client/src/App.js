@@ -7,6 +7,7 @@ import axios from 'axios';
 import { UserContextProvider } from './UserContext';
 import Places from './pages/Places/places';
 import Placesnew from './pages/Places/placesnew';
+import PlacePage from './pages/Places/placepage';
 axios.defaults.withCredentials=true;
 const App=()=>{
   return (
@@ -20,6 +21,7 @@ const App=()=>{
         <Route path="/account/places" element={<Places />} />
         <Route path="/account/places/new" element={<Placesnew/>}/>
         <Route path="/account/places/:id" element={<Placesnew/>}/>
+        <Route path="/place/:id" element={<PlacePage/>}/>
         </Routes>
       </Router>
     </UserContextProvider>
