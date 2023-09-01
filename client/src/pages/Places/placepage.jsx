@@ -77,10 +77,11 @@ const PlacePage = () => {
                   src={"http://localhost:4000/uploads/" + place.photos?.[0]}
                   alt="No Image"
                   className="aspect aspect-square object-cover"
+                  onClick={() => setmorePhotos(true)}
                 />
               )}
               <div className="flex font-semibold text-xl bg-gray-400">
-                <button className="absolute bottom-4 left-4 flex py-2 px-4 bg-white rounded-md" onClick={() => setmorePhotos(true)}>
+                <button className="absolute bottom-4 left-4 flex bg-black text-white font-bold py-2 px-4 mt-4 rounded-md" onClick={() => setmorePhotos(true)}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -123,7 +124,7 @@ const PlacePage = () => {
             Max number of guests: {place.maxGuests}
           </div>
           <div>
-          <BookingWidget place={place} />
+          <BookingWidget place={place} maxGuests={place.maxGuests}/>
         </div>
         </div>
         <div className="bg-white -mx-8 px-8 py-8 border-t">
