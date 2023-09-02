@@ -27,9 +27,9 @@ const UserBookingpage = () => {
           bookings.map((booking) => (
             <Link
               to={`/account/bookings/${booking._id}`}
-              className="flex gap-4 bg-gray-200 rounded-2xl overflow-hidden mb-4 w-3/4 mx-auto mt-6"
+              className="flex gap-4 bg-gray-200 rounded-2xl overflow-hidden mb-4 w-3/4 mx-auto mt-6 transition-transform duration-300 ease-in-out hover:scale-105 "
             >
-              <div className="w-48">
+              <div className="w-48 mt-2 ml-2">
                 <img
                   src={
                     "http://localhost:4000/uploads/" + booking.place.photos?.[0]
@@ -39,7 +39,7 @@ const UserBookingpage = () => {
                 />
               </div>
               <div className="py-3 pr-3 grow">
-                <h2 className="text-xl">{booking.place.title}</h2>
+                <h2 className="text-2xl font-semibold">{booking.place.title}</h2>
                 <div className="text-xl">
                   <div className={"flex gap-1 mb-2 mt-4 text-gray-500"}>
                     <svg

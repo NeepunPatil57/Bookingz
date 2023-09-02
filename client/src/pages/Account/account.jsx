@@ -40,17 +40,17 @@ const Account = () => {
       <Navbar />
       <AccountNav />
       {subpage === 'profile' && (
-        <div className='py-5 px-60'>
+        <div className='py-5 px-60 '>
           <h3 className='user_welcome'>Welcome... {user.name}</h3>
           <div className='profile'>
-            <span className='profile_heading'>Profile</span>
+            <span className='profile_heading relative top-4 text-xl'>Profile</span>
             <div className='profile-photo'>
-              Profile Photo
+              <img src="https://cdn0.iconfinder.com/data/icons/people-57/24/user-square-512.png"/>
             </div>
             <span className='profile-info'>Username: {user.name}</span><br />
             <span className='profile-info'>Email: {user.email}</span>
             <div>
-              <h2 className='logout'>You are currently Logged in as {user.name} email: {user.email}</h2>
+              <h2 className='logout '>You are currently Logged in as {user.name}</h2>
               <body>
                 <button class=" button logout-button" onClick={logout}>Logout</button>
               </body>

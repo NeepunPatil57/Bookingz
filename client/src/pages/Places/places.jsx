@@ -19,14 +19,14 @@ const Places = () => {
 
       <div className="text-center mt-4">
         <Link
-          className="inline-flex gap-1 bg-cyan-300 text-black font-semibold py-2 px-6 rounded-full"
+          className="inline-flex gap-1 bg-black text-white font-semibold py-4 px-8 rounded-full text-lg"
           to={"/account/places/new"}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
-            fill="currentColor"
-            className="w-6 h-6"
+            fill="white"
+            className="w-7 h-7"
           >
             <path
               fillRule="evenodd"
@@ -45,7 +45,7 @@ const Places = () => {
           places.map((place) => (
             <Link
               to={"/account/places/" + place._id}
-              className="bg-gray-200 mb-4 p-4 rounded-2xl flex gap-4 shink-0 cursor-pointer w-3/4 mx-auto"
+              className="bg-gray-200 mb-6 p-4 rounded-2xl flex gap-4 shink-0 cursor-pointer w-3/4 mx-auto transition-transform duration-300 ease-in-out hover:scale-105"
             >
               <div className="flex w-32 h-32 bg-gray-500 ">
                 {place.photos.length && (
