@@ -30,10 +30,14 @@ const BookingWidget = ({ place, maxGuests }) => {
   }
 
   async function bookThisPlace() {
-    const response = await axios.post('http://localhost:4000/bookings',{
-      checkIn,checkOut,numberOfGuests,name,phone,
-      place:place._id,
-      price:numberOfNights * place.price,
+    const response = await axios.post("http://localhost:4000/bookings", {
+      checkIn,
+      checkOut,
+      numberOfGuests,
+      name,
+      phone,
+      place: place._id,
+      price: numberOfNights * place.price,
     });
     const bookingId = response.data._id;
     setRedirect(`/account/bookings/${bookingId}`);
@@ -129,7 +133,13 @@ const BookingWidget = ({ place, maxGuests }) => {
             <input
               type="tel"
               value={phone}
-              onChange={(ev) => setPhone(ev.target.value)}
+              onChange={(ev) => {
+                const input = ev.target.value;
+                const cleanedInput = input.replace(/\D/g, "");
+                const limitedInput = cleanedInput.slice(0, 10);
+                setPhone(limitedInput);
+              }}
+              maxLength="10"
             />
           </div>
         )}

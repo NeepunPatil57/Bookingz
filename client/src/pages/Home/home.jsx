@@ -67,7 +67,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="mt-4">
+      <div className="mt-0">
         {isLoading ? (
           <p>Loading...</p>
         ) : noPlacesFound ? (

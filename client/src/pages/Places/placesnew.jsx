@@ -147,12 +147,14 @@ const Placesnew = () => {
     <div className="px-4">
       <Navbar />
       <AccountNav />
-      <span className="font-semibold text-3xl mb-4 ">Details</span>
+      <span className="font-semibold text-4xl mb-4 ">Details</span>
       <div className="py-5">
         <div className="p-4 rounded-lg shadow-md  ring-2 ring-gray-300">
           <form className="w-md" onSubmit={addPlaces}>
-            <h2 className="font-semibold text-2xl">Title</h2>
-            <p className="text-grey-500">Title for Your Appartment</p>
+            <h2 className="font-semibold text-3xl">Title</h2>
+            <p className="text-grey-500 font-semibold text-xl">
+              Title for Your Appartment
+            </p>
             <input
               className="w-full font-semibold text-lg px-2 py-2 rounded-lg  focus:border-black"
               type="text"
@@ -160,8 +162,10 @@ const Placesnew = () => {
               value={title}
               onChange={(ev) => setTitle(ev.target.value)}
             />
-            <h2 className="font-semibold text-2xl">Address</h2>
-            <p className="text-grey-500">Address for Your Appartment</p>
+            <h2 className="font-semibold text-3xl mt-4">Address</h2>
+            <p className="text-grey-500 font-semibold text-xl">
+              Address for Your Appartment
+            </p>
             <input
               className="w-full font-semibold text-lg px-2 py-2 rounded-lg  focus:border-black"
               type="text"
@@ -169,8 +173,10 @@ const Placesnew = () => {
               value={address}
               onChange={(ev) => setAddress(ev.target.value)}
             />
-            <h2 className="font-semibold text-2xl">Photos</h2>
-            <p className="text-grey-500">More are Better</p>
+            <h2 className="font-semibold text-3xl mt-4">Photos</h2>
+            <p className="text-grey-500 font-semibold text-xl">
+              More are Better
+            </p>
             <div>
               <input
                 type="text"
@@ -182,7 +188,7 @@ const Placesnew = () => {
 
               <button
                 onClick={addPhotoByLink}
-                className="bg-cyan-300 rounded-2xl py-6 px-4 font-semibold text-black flex items-center gap-2 text-md"
+                className="bg-black rounded-2xl py-6 px-4 font-semibold text-white flex items-center gap-2 text-lg"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -203,7 +209,7 @@ const Placesnew = () => {
                     d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"
                   />
                 </svg>
-                Add Photo
+                Add Photo By Link
               </button>
             </div>
             <div className="mt-2 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
@@ -271,7 +277,7 @@ const Placesnew = () => {
                     </button>
                   </div>
                 ))}
-              <label className="bg-cyan-300 h-40 cursor-pointer border font-semibold rounded-2xl p-8 text-md text-black flex items-center">
+              <label className="bg-black h-40 cursor-pointer border font-semibold rounded-2xl p-8 text-lg text-white flex items-center">
                 <input
                   type="file"
                   multiple
@@ -295,27 +301,33 @@ const Placesnew = () => {
                 Upload From Your Device (.jpeg , .png)
               </label>
             </div>
-            <h2 className="font-semibold text-2xl">Description</h2>
-            <p className="text-grey-500">Description </p>
+            <h2 className="font-semibold text-3xl mt-4">Description</h2>
+            <p className="text-grey-500 font-semibold text-xl">Description </p>
             <textarea
               value={description}
               onChange={(ev) => setDescription(ev.target.value)}
             />
-            <h2 className="font-semibold text-2xl">Perks</h2>
-            <p className="text-grey-500">Select All Perks of Your Place</p>
-            <div className="grid md:grid-cols-3 sm:grid-cols-2 lg:sm:grid-cols-6  gap-4">
+            <h2 className="font-semibold text-3xl mt-4">Perks</h2>
+            <p className="text-grey-500 font-semibold text-xl">
+              Select All Perks of Your Place
+            </p>
+            <div className="">
               <Perks selected={perks} onChange={setPerks} />
             </div>
-            <h2 className="font-semibold text-2xl">Extra Information</h2>
-            <p className="text-grey-500">Apartment Rules</p> extraInfo
+            <h2 className="font-semibold text-3xl mt-4">Extra Information</h2>
+            <p className="text-grey-500 font-semibold text-xl">
+              Apartment Rules
+            </p>
             <textarea
               value={extraInfo}
               onChange={(ev) => setExtraInfo(ev.target.value)}
             />
             <div className="grid gap-2 grid-cols-2 md:grid-cols-4">
               <div>
-                <h2 className="font-semibold text-2xl">Check In Time</h2>
-                <p className="text-grey-500">Add Check In Time of Your Place</p>
+                <h2 className="font-semibold text-3xl mt-4">Check In Time</h2>
+                <p className="text-grey-500 font-semibold text-xl">
+                  Add Check In Time of Your Place
+                </p>
                 <input
                   type="text"
                   placeholder="14:00"
@@ -324,8 +336,8 @@ const Placesnew = () => {
                 />
               </div>
               <div>
-                <h2 className="font-semibold text-2xl">Check Out Time</h2>
-                <p className="text-grey-500">
+                <h2 className="font-semibold text-3xl mt-4">Check Out Time</h2>
+                <p className="text-grey-500 font-semibold text-xl">
                   Add Check Out Time of Your Place
                 </p>
                 <input
@@ -336,8 +348,8 @@ const Placesnew = () => {
                 />
               </div>
               <div>
-                <h2 className="font-semibold text-2xl">Max Number of Guests</h2>
-                <p className="text-grey-500">
+                <h2 className="font-semibold text-3xl mt-4">Max Number of Guests</h2>
+                <p className="text-grey-500 font-semibold text-xl">
                   Add Max no of Guests in Your Place
                 </p>
                 <input
@@ -348,8 +360,10 @@ const Placesnew = () => {
                 />
               </div>
               <div>
-                <h3 className="mt-2 -mb-1 font-semibold text-2xl">Price Per Night</h3>
-                <p className="text-grey-500">
+                <h3 className="font-semibold text-3xl mt-4">
+                  Price Per Night
+                </h3>
+                <p className="text-grey-500 font-semibold text-xl">
                   Price Per Night of Your Place
                 </p>
                 <input
@@ -359,9 +373,9 @@ const Placesnew = () => {
                 />
               </div>
             </div>
-            <div>
-              <button className="bg-cyan-300 rounded-2xl w-full my-6 py-6 px-4 font-semibold text-black flex items-center gap-2 justify-center text-2xl">
-                Save All Your Details
+            <div className="flex flex-col items-center justify-center mt-4">
+              <button className="bg-black rounded-2xl my-6 py-6 px-8 font-semibold text-white text-2xl transition-transform duration-300 ease-in-out hover:scale-105">
+                Save All Your Place Details
               </button>
             </div>
           </form>

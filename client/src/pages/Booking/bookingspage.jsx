@@ -100,7 +100,12 @@ const Bookingspage = () => {
           </div>
           <div className="bg-primary p-6 text-black rounded-2xl">
             <div>Total price</div>
-            <div className="text-3xl">${booking.price}</div>
+            <div className="text-3xl">
+            {"₹" +
+            (booking.price && typeof booking.price === "number"
+              ? booking.price.toLocaleString()
+              : "N/A")}{" "}
+            </div>
           </div>
         </div>
         <PlaceGallery place={booking.place} />
